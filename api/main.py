@@ -2,26 +2,30 @@ from flask import Flask,request,jsonify
 app = Flask(__name__)
 
 
-
 @app.route('/')
 def hello():
     name = "Hello World"
     return "This domain is intended for testing Chikuzen-ni IoT endpoints."
 
+
 @app.route('/IoT',methods=['POST'])
 def iot():
+    #get data
     headers= request.headers.get("Chikuzenni-token",None)
     json=request.get_json()
+    #check json data
     if json == None:
         if request.headers['Content-Type'] != 'application/json':
             return_data={"success":False,"message":"Kindly use the Content-Type as application/json."}
         else:
             return_data={"success":False,"message":"We can only process JSON data."}
         return jsonify(return_data)
+
+    #parse json data
     data1 = json.get('token',None)
     data2 = json.get('status',None)
-    print(data2==None)
 
+    #check requirements
     if (headers==None or data1==None or data2==None):
         return_data={"success":False,"message":"The required information is incomplete."}
     else:
@@ -33,7 +37,7 @@ def iot():
             "body-status":data2
             }
             }
-    print(return_data)
+
     return jsonify(return_data)
 
 if __name__ == "__main__":
