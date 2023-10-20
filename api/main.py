@@ -5,7 +5,7 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     name = "Hello World"
-    return "This domain is intended for testing Chikuzen-ni IoT endpoints."
+    return "Congratulations!　You finally found me！"
 
 
 @app.route('/IoT',methods=['POST'])
